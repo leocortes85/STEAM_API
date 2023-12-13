@@ -11,8 +11,8 @@ df_playtime_genre = pd.read_parquet('Data/playtime_genre.parquet')
 df_user_for_genre = pd.read_parquet('Data/user_for_genre.parquet')
 df_user_recommend = pd.read_parquet('Data/user_recommend.parquet')
 df_sentiment_year = pd.read_parquet('Data/sentiment_year.parquet')
-# df_id = pd.read_parquet('Data/df_id.parquet')
-# df_games = pd.read_parquet('Data/game_sim.parquet')
+df_id = pd.read_parquet('Data/df_id.parquet')
+df_games = pd.read_parquet('Data/game_sim.parquet')
 # umatrix_norm = pd.read_parquet('Data/umatrix_norm.parquet')
 # user_sim_df = pd.read_parquet('Data/user_sim.parquet')
 
@@ -290,35 +290,35 @@ def sentiment_analysis(year):
 
 
 
-# def item_similarity(item_id: int):
-#     '''
-#     Generates recommendations for a game given its ID.
+def item_similarity(item_id: int):
+    '''
+    Generates recommendations for a game given its ID.
 
-#     Parameters:
-#     - item_id (int): The ID of the game for which you want to obtain recommendations.
+    Parameters:
+    - item_id (int): The ID of the game for which you want to obtain recommendations.
 
-#     Returns:
-#     - recommendations (list): A list of recommended game names for the given game.
-#     - message (str): A message indicating if the entered ID has no data available.
-#     '''
+    Returns:
+    - recommendations (list): A list of recommended game names for the given game.
+    - message (str): A message indicating if the entered ID has no data available.
+    '''
 
-#     # Get item name from Id
-#     game_name = df_id.loc[df_id['item_id'] == item_id, 'item_name'].iloc[0]
+    # Get item name from Id
+    game_name = df_id.loc[df_id['item_id'] == item_id, 'item_name'].iloc[0]
 
-#     # Check if item exists in the similarity matrix
-#     if game_name not in df_games.index:
-#         return [], f"ID {item_id} has not data avalible."
+    # Check if item exists in the similarity matrix
+    if game_name not in df_games.index:
+        return [], f"ID {item_id} has not data avalible."
 
-#     # Get the row corresponding to the item
-#     game_row = df_games.loc[game_name]
+    # Get the row corresponding to the item
+    game_row = df_games.loc[game_name]
 
-#     # Find similar items by sorting the row
-#     similar_games = df_games.dot(game_row).sort_values(ascending=False)
+    # Find similar items by sorting the row
+    similar_games = df_games.dot(game_row).sort_values(ascending=False)
 
-#     # Remove the item itself from the recommendation list
-#     similar_games = similar_games.drop(game_name)
+    # Remove the item itself from the recommendation list
+    similar_games = similar_games.drop(game_name)
 
-#     # Take the first 5 games as recommendations and return in list format
-#     recommendations = similar_games.head(5).index.tolist()
+    # Take the first 5 games as recommendations and return in list format
+    recommendations = similar_games.head(5).index.tolist()
 
-#     return 'Recommend similar items to item {}'.format(item_id), recommendations
+    return 'Recommend similar items to item {}'.format(item_id), recommendations

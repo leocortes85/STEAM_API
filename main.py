@@ -123,16 +123,16 @@ def sentiment_analysis(year: int = Query(...,
 
 
 
-# @app.get(path = '/get_recommendations_by_id',
-#           description = """ <font color="blue">
-#                         INSTRUCTIONS<br>
-#                         1. Click "Try it out".<br>
-#                         2. Enter the item id in the box below.<br>
-#                         3. Scroll to "Responses body" to see a list of the most recommended similarity items.
-#                         </font>
-#                         """,
-#          tags=["Queries"])
-# def get_recommendations_by_id(item_id: int = Query(..., 
-#                                 description="Item id in the Steam Platform", 
-#                                 example='219760')):
-#     return ft.item_similarity(item_id)
+@app.get(path = '/get_recommendations_by_id',
+          description = """ <font color="blue">
+                        INSTRUCTIONS<br>
+                        1. Click "Try it out".<br>
+                        2. Enter the item id in the box below.<br>
+                        3. Scroll to "Responses body" to see a list of the most recommended similarity items.
+                        </font>
+                        """,
+         tags=["Queries"])
+def get_recommendations_by_id(item_id: int = Query(..., 
+                                description="Item id in the Steam Platform", 
+                                example='219760')):
+    return ft.item_similarity(item_id)
