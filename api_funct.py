@@ -77,7 +77,7 @@ def Intro():
         <h1>Leonardo Cortés. IP1, 'Soy Henry' Data Bootcamp</h1>
         <h1>Steam Platform Video Game Query API</h1>
         <h1>Welcome!</h1>
-        <p>To interact with available endpoints, explore the API documentation clicking the image.</p>
+        <p>To interact with available endpoints, explore the API documentation <b>clicking the image</b>.</p>
         <a href="/docs"><img src="https://img.asmedia.epimg.net/resizer/XsDeF1LjuA8ud6DsQpHUuq9Ropw=/644x362/cloudfront-eu-central-1.images.arcpublishing.com/diarioas/MWVSLOODJVBRDAIZ5DMRUDQIRM.jpg" alt="Steam Image" style="width: 500px; height: auto; margin-top: 20px;"></a>
     
         <p>For project details, check out the <a href="https://github.com/leocortes85/PI_MLOps_Steam" target="_blank" rel="noopener noreferrer" class="github-badge">GitHub repository <img alt="GitHub" src="https://img.shields.io/badge/GitHub-black?style=flat-square&logo=github"></a></p>
