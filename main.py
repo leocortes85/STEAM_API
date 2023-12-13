@@ -107,19 +107,19 @@ def sentiment_analysis(year: int = Query(...,
 
 
 
-# @app.get(path = '/similar_user_recs',
-#           description = """ <font color="blue">
-#                         INSTRUCTIONS<br>
-#                         1. Click "Try it out".<br>
-#                         2. Enter the user in the box below.<br>
-#                         3. Scroll to "Responses body" to see a list of the most recommended items for the user based on the rating of similar users.
-#                         </font>
-#                         """,
-#          tags=["Queries"])
-# def similar_user_recs(user: str = Query(..., 
-#                                 description="User id in the Steam Platform", 
-#                                 example='Terenator')):
-#     return ft.user_similarity(user)
+@app.get(path = '/similar_user_recs',
+          description = """ <font color="blue">
+                        INSTRUCTIONS<br>
+                        1. Click "Try it out".<br>
+                        2. Enter the user in the box below.<br>
+                        3. Scroll to "Responses body" to see a list of the most recommended items for the user based on the rating of similar users.
+                        </font>
+                        """,
+         tags=["Queries"])
+def similar_user_recs(user: str = Query(..., 
+                                description="User id in the Steam Platform", 
+                                example='Terenator')):
+    return ft.user_similarity(user)
 
 
 
