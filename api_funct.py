@@ -248,7 +248,7 @@ def sentiment_analysis(year):
 
 
 
-def similar_user_recs(user: str):
+def user_similarity(user: str):
     '''
     Generates a list of the most recommended items for a user, based on ratings from similar users.
 
