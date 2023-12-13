@@ -319,6 +319,6 @@ def item_similarity(item_id: int):
     similar_games = similar_games.drop(game_name)
 
     # Take the first 5 games as recommendations and return in list format
-    recommendations = similar_games.head(5).index.tolist()
+    recommendations = similar_games.nlargest(5).index.tolist()
 
     return 'Recommend similar items to item {}'.format(item_id), recommendations
