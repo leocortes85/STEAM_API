@@ -11,10 +11,10 @@ df_playtime_genre = pd.read_parquet('Data/playtime_genre.parquet')
 df_user_for_genre = pd.read_parquet('Data/user_for_genre.parquet')
 df_user_recommend = pd.read_parquet('Data/user_recommend.parquet')
 df_sentiment_year = pd.read_parquet('Data/sentiment_year.parquet')
-df_id = pd.read_parquet('Data/df_id.parquet')
-df_games = pd.read_parquet('Data/game_sim.parquet')
-umatrix_norm = pd.read_parquet('Data/umatrix_norm.parquet')
-user_sim_df = pd.read_parquet('Data/user_sim.parquet')
+# df_id = pd.read_parquet('Data/df_id.parquet')
+# df_games = pd.read_parquet('Data/game_sim.parquet')
+# umatrix_norm = pd.read_parquet('Data/umatrix_norm.parquet')
+# user_sim_df = pd.read_parquet('Data/user_sim.parquet')
 
 
 def Intro():
@@ -248,77 +248,77 @@ def sentiment_analysis(year):
 
 
 
-def user_similarity(user: str):
-    '''
-    Generates a list of the most recommended items for a user, based on ratings from similar users.
+# def user_similarity(user: str):
+#     '''
+#     Generates a list of the most recommended items for a user, based on ratings from similar users.
 
-    Arguments:
-        user (str): The name or identifier of the user for whom you want to generate recommendations.
+#     Arguments:
+#         user (str): The name or identifier of the user for whom you want to generate recommendations.
 
-    Returns:
-        list: A list of the most recommended items for the user based on the rating of similar users.
+#     Returns:
+#         list: A list of the most recommended items for the user based on the rating of similar users.
 
-    '''
-    # Check if the user is present in the umatrix_norm columns (if not, return a message)
-    if user not in umatrix_norm.columns:
-        return('No data available on user {}'.format(user))
+#     '''
+#     # Check if the user is present in the umatrix_norm columns (if not, return a message)
+#     if user not in umatrix_norm.columns:
+#         return('No data available on user {}'.format(user))
     
-    # Get the users most similar to the given user
-    sim_users = user_sim_df.sort_values(by=user, ascending=False).index[1:11]
+#     # Get the users most similar to the given user
+#     sim_users = user_sim_df.sort_values(by=user, ascending=False).index[1:11]
     
-    best = []  # List to store the items best rated by similar users
-    most_common = {}  # Dictionary to count how many times each item is recommended
+#     best = []  # List to store the items best rated by similar users
+#     most_common = {}  # Dictionary to count how many times each item is recommended
     
-    # For each similar user, find the highest rated item and add it to the 'best' list
-    for i in sim_users:
-        max_score = umatrix_norm.loc[:, i].max()
-        best.append(umatrix_norm[umatrix_norm.loc[:, i]==max_score].index.tolist())
+#     # For each similar user, find the highest rated item and add it to the 'best' list
+#     for i in sim_users:
+#         max_score = umatrix_norm.loc[:, i].max()
+#         best.append(umatrix_norm[umatrix_norm.loc[:, i]==max_score].index.tolist())
            
-    # Counts how many times each item is recommended
-    for i in range(len(best)):
-        for j in best[i]:
-            if j in most_common:
-                most_common[j] += 1
-            else:
-                most_common[j] = 1
+#     # Counts how many times each item is recommended
+#     for i in range(len(best)):
+#         for j in best[i]:
+#             if j in most_common:
+#                 most_common[j] += 1
+#             else:
+#                 most_common[j] = 1
     
-    # Sort items by recommendation frequency in descending order
-    sorted_list = sorted(most_common.items(), key=operator.itemgetter(1), reverse=True)
+#     # Sort items by recommendation frequency in descending order
+#     sorted_list = sorted(most_common.items(), key=operator.itemgetter(1), reverse=True)
   
-    # Return 5 most recommend items
-    return 'Users who are similar to {}:'.format(user), 'also liked it', sorted_list[:5]
+#     # Return 5 most recommend items
+#     return 'Users who are similar to {}:'.format(user), 'also liked it', sorted_list[:5]
 
 
 
-def item_similarity(item_id: int):
-    '''
-    Generates recommendations for a game given its ID.
+# def item_similarity(item_id: int):
+#     '''
+#     Generates recommendations for a game given its ID.
 
-    Parameters:
-    - item_id (int): The ID of the game for which you want to obtain recommendations.
+#     Parameters:
+#     - item_id (int): The ID of the game for which you want to obtain recommendations.
 
-    Returns:
-    - recommendations (list): A list of recommended game names for the given game.
-    - message (str): A message indicating if the entered ID has no data available.
-    '''
+#     Returns:
+#     - recommendations (list): A list of recommended game names for the given game.
+#     - message (str): A message indicating if the entered ID has no data available.
+#     '''
 
-    # Get item name from Id
-    game_name = df_id.loc[df_id['item_id'] == item_id, 'item_name'].iloc[0]
+#     # Get item name from Id
+#     game_name = df_id.loc[df_id['item_id'] == item_id, 'item_name'].iloc[0]
 
-    # Check if item exists in the similarity matrix
-    if game_name not in df_games.index:
-        return [], f"ID {item_id} has not data avalible."
+#     # Check if item exists in the similarity matrix
+#     if game_name not in df_games.index:
+#         return [], f"ID {item_id} has not data avalible."
 
-    # Get the row corresponding to the item
-    game_row = df_games.loc[game_name]
+#     # Get the row corresponding to the item
+#     game_row = df_games.loc[game_name]
 
-    # Find similar items by sorting the row
-    similar_games = df_games.dot(game_row).sort_values(ascending=False)
+#     # Find similar items by sorting the row
+#     similar_games = df_games.dot(game_row).sort_values(ascending=False)
 
-    # Remove the item itself from the recommendation list
-    similar_games = similar_games.drop(game_name)
+#     # Remove the item itself from the recommendation list
+#     similar_games = similar_games.drop(game_name)
 
-    # Take the first 5 games as recommendations and return in list format
-    recommendations = similar_games.head(5).index.tolist()
+#     # Take the first 5 games as recommendations and return in list format
+#     recommendations = similar_games.head(5).index.tolist()
 
-    return 'Recommend similar items to item {}'.format(item_id), recommendations
+#     return 'Recommend similar items to item {}'.format(item_id), recommendations
